@@ -1,0 +1,45 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Prog06_MakeMagic {
+
+	public static void main(String[] args) {
+	int inputValid = 0;
+	int row = inputValid - 1;
+	int column = inputValid / 2;
+	ArrayList<ArrayList<String>> magicSquare = new ArrayList<>();
+	
+	
+	inputValid = numberIsValid();
+	System.out.println(inputValid);
+	
+	for (int k = 0; k <= inputValid * inputValid ; k ++ ) {
+		
+	}
+
+	}
+//______________________________________________________________________________________________________________________________________________________________________________
+	public static int numberIsValid () {
+		Scanner valid = new Scanner (System.in);
+		boolean isValid = false;
+		int validValue = 0;
+		
+		System.out.println("Enter an odd integer with a value greater than 0:");
+		do {
+				if (valid.hasNextInt()) { validValue = valid.nextInt();
+				}
+				else {
+					valid.next();
+				}
+				
+				if (validValue <= 0 || validValue % 2 != 1) { System.out.println("Please enter a valid value:"); }
+				
+				if (validValue % 2 != 0 && validValue > 0)  { System.out.println(""); isValid = true; }
+		}
+		  while (isValid == false);
+		
+		  return validValue;
+		}
+	
+//______________________________________________________________________________________________________________________________________________________________________________	
+}
