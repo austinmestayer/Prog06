@@ -1,0 +1,115 @@
+
+import java.util.Scanner;
+
+public class Prog06_MakeMagic {
+
+	public static void main(String[] args) {
+	int n = 0;
+	int[][] magic = new int[n][n];
+//_______________________________________________________________________________________________________________________________________________________________________________	
+	n = numberIsValid();
+	System.out.println(n);
+	squareCreator(n);
+
+	 if (validMagicSquare(magic, n)) 
+         System.out.println("Magic Square"); 
+     else
+         System.out.println("Not a magic" + 
+                                 " Square"); 
+ } 
+		
+	
+		
+	
+
+	
+//______________________________________________________________________________________________________________________________________________________________________________
+	public static int numberIsValid () {
+		Scanner valid = new Scanner (System.in);
+		boolean isValid = false;
+		int validValue = 0;
+		
+		System.out.println("Enter an odd integer with a value greater than 0:");
+		do {
+				if (valid.hasNextInt()) { validValue = valid.nextInt();
+				}
+				else {
+					valid.next();
+				}
+				
+				if (validValue <= 0 || validValue % 2 != 1) { System.out.println("Please enter a valid value:"); }
+				
+				if (validValue % 2 != 0 && validValue > 0)  { System.out.println(""); isValid = true; }
+		}
+		  while (isValid == false);
+		
+		  return validValue;
+		}
+	
+//______________________________________________________________________________________________________________________________________________________________________________	
+	public static int[][] squareCreator (int n) {
+		 int[][] magic = new int[n][n];
+
+	        int row = n-1;
+	        int col = n/2;
+	        magic[row][col] = 1;
+
+	        for (int k = 1; k <= n*n; k++) {
+	           
+	        	  magic[row][col] = k;
+	        	  row = (row + 1) % n;
+	        	  col = (col + 1) % n;
+	        	  
+	        	  if (magic[row][col] != 0) {
+	        		  col = (col - 1 + n) % n;
+	        		  row = (row - 2 + n) % n;
+	        	  }
+	        }
+
+	        // print results
+	        for (int k = 0; k < n; k++) {
+	            for (int j = 0; j < n; j++) {
+	                System.out.printf("%5d", magic[k][j]);
+	            }
+	            System.out.println();
+	        }
+			return magic;
+
+	    }
+//_____________________________________________________________________________________________________________________________________________________________________________________
+	public static boolean validMagicSquare(int magic[][], int n) {
+		 // calculate the sum of 
+        // the prime diagonal 
+        int sum = 0; 
+        for (int i = 1; i < n; i++) 
+            sum = sum + magic[i][i]; 
+  
+        // For sums of Rows 
+        for (int i = 0; i < n; i++) { 
+  
+            int rowSum = 0; 
+            for (int j = 0; j < n; j++) 
+                rowSum += magic[i][j]; 
+  
+            // check if every row sum is 
+            // equal to prime diagonal sum 
+            if (rowSum != sum) 
+                return false; 
+        } 
+  
+        // For sums of Columns 
+        for (int i = 0; i < n; i++) { 
+  
+            int colSum = 0; 
+            for (int j = 0; j < n; j++) 
+                colSum += magic[j][i]; 
+  
+            // check if every column sum is 
+            // equal to prime diagonal sum 
+            if (sum != colSum) 
+                return false; 
+        } 
+  
+        return true; 
+    } 
+}
