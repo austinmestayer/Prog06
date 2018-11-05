@@ -1,0 +1,112 @@
+import java.util.Scanner;
+
+public class Prog06_MakeMagic {
+
+	public static void main(String[] args) {
+	int n = 0;
+//_______________________________________________________________________________________________________________________________________________________________________________	
+	n = numberIsValid();
+	System.out.println(n);
+	System.out.println("");
+	int[][] magicArray = squareCreator(n);
+
+	 if (validMagicSquare(magicArray, n)) {
+		 System.out.println("");
+         System.out.println("It is confirmed: This is a magic square."); 
+	 }
+     else {
+    	 System.out.println("");
+         System.out.println("This is not a magic square."); 
+     }
+ } 
+	
+//______________________________________________________________________________________________________________________________________________________________________________
+	public static int numberIsValid () {
+		Scanner valid = new Scanner (System.in);
+		boolean isValid = false;
+		int validValue = 0;
+		
+		System.out.println("Let’s make some magic! ");
+		System.out.println("Enter an odd number greater than 0:");
+		do {
+				if (valid.hasNextInt()) { validValue = valid.nextInt();
+				}
+				else {
+					valid.next();
+				}
+				
+				if (validValue <= 0 || validValue % 2 != 1) { System.out.println("Please enter a valid value:"); }
+				
+				if (validValue % 2 != 0 && validValue > 0)  { System.out.println(""); isValid = true; }
+		}
+		  while (isValid == false);
+		
+		  valid.close();
+		
+		  return validValue;
+		}
+	
+//______________________________________________________________________________________________________________________________________________________________________________	
+	public static int[][] squareCreator (int n) {
+		int[][] magicArray = new int[n][n];
+
+	        int row = n-1;
+	        int col = n/2;
+	        magicArray[row][col] = 1;
+
+	        for (int k = 1; k <= n*n; k++) {
+	           
+	        	  magicArray[row][col] = k;
+	        	  row = (row + 1) % n;
+	        	  col = (col + 1) % n;
+	        	  
+	        	  if (magicArray[row][col] != 0) {
+	        		  col = (col - 1 + n) % n;
+	        		  row = (row - 2 + n) % n;
+	        	  }
+	        }
+
+	        // print results
+	        for (int k = 0; k < n; k++) {
+	            for (int j = 0; j < n; j++) {
+	                System.out.printf("%5d", magicArray[k][j]);
+	            }
+	            System.out.println();
+	        }
+			return magicArray;
+
+	    }
+//_____________________________________________________________________________________________________________________________________________________________________________________
+	public static boolean validMagicSquare(int magicArray[][], int n) {
+//calculate diagonal values
+        int sum = 0; 
+        for (int i = 0; i < n; i++) 
+            sum = sum + magicArray[i][i]; 
+  
+//calculate row values
+        for (int i = 0; i < n; i++) { 
+  
+            int rowSum = 0; 
+            for (int j = 0; j < n; j++) 
+                rowSum += magicArray[i][j]; 
+  
+//calculate if row sum is equal to diagonal sum
+            if (rowSum != sum) 
+                return false; 
+        } 
+  
+//calculate column values      
+        for (int i = 0; i < n; i++) { 
+  
+            int colSum = 0; 
+            for (int j = 0; j < n; j++) 
+                colSum += magicArray[j][i]; 
+  
+//calculate if column sum is equal to diagonal sum
+            if (sum != colSum) 
+                return false; 
+        } 
+  
+        return true; 
+    } 
+}
